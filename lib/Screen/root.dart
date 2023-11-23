@@ -1,9 +1,13 @@
+import 'package:etransit/Screen/CreationAnnonce.dart';
 import 'package:etransit/Screen/Message.dart';
+import 'package:etransit/Screen/ReservationArticle.dart';
 import 'package:etransit/Screen/home.dart';
 import 'package:etransit/Screen/profil.dart';
+import 'package:etransit/services/AuthService.dart';
 import 'package:etransit/theme/color.dart';
 import 'package:etransit/widgets/bottombar_item.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RootApp extends StatefulWidget {
   const RootApp({Key? key}) : super(key: key);
@@ -13,32 +17,44 @@ class RootApp extends StatefulWidget {
 }
 
 class _RootAppState extends State<RootApp> {
-  int _activeTab = 0;
-
   List<IconData> _tapIcons = [
     Icons.home_rounded,
     Icons.add,
     Icons.messenger_outline,
     Icons.person_rounded
   ];
+  List<IconData> tapIcons = [Icons.home_rounded, Icons.person_rounded];
 
   List<Widget> _pages = [
     Home(),
-    Container(),
+    CreationAnnonce(),
     Message(),
     Profil(),
   ];
+  List<Widget> pages = [
+    Home(),
+    Profil(),
+  ];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<AuthService>().authenticate;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final auth = context.watch<AuthService>();
     return Scaffold(
       backgroundColor: appBgColor,
-      bottomNavigationBar: _buildBottomBar(),
-      body: _buildBarPage(),
+      bottomNavigationBar: _buildBottomBar(
+          auth.authenticate == false ? tapIcons : _tapIcons, auth.tabindex!),
+      body: _buildBarPage(
+          auth.authenticate == false ? pages : _pages, auth.tabindex!),
     );
   }
 
-  Widget _buildBottomBar() {
+  Widget _buildBottomBar(List<IconData> tapIcons, int activeTab) {
     return Container(
       height: 75,
       width: double.infinity,
@@ -62,14 +78,14 @@ class _RootAppState extends State<RootApp> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: List.generate(
-          _tapIcons.length,
+          tapIcons.length,
           (index) => BottomBarItem(
-            _tapIcons[index],
-            isActive: _activeTab == index,
+            tapIcons[index],
+            isActive: activeTab == index,
             activeColor: primary,
             onTap: () {
               setState(() {
-                _activeTab = index;
+                context.read<AuthService>().setIndex(index);
               });
             },
           ),
@@ -78,12 +94,12 @@ class _RootAppState extends State<RootApp> {
     );
   }
 
-  Widget _buildBarPage() {
+  Widget _buildBarPage(List<Widget> pages, int activeTab) {
     return IndexedStack(
-      index: _activeTab,
+      index: activeTab,
       children: List.generate(
-        _tapIcons.length,
-        (index) => _pages[index],
+        pages.length,
+        (index) => pages[index],
       ),
     );
   }

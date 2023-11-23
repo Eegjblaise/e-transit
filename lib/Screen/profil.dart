@@ -1,8 +1,11 @@
 import 'package:etransit/Screen/LoginScreen.dart';
+import 'package:etransit/services/AuthService.dart';
+import 'package:etransit/services/DioClient.dart';
 import 'package:etransit/theme/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class Profil extends StatefulWidget {
   const Profil({super.key});
@@ -13,8 +16,234 @@ class Profil extends StatefulWidget {
 
 class _ProfilState extends State<Profil> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<AuthService>().authenticate;
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    final auth = context.read<AuthService>();
+    print(auth.currentUser!.photo);
     return Scaffold(
+        backgroundColor: appBgColor,
+        body: Stack(children: [
+          SafeArea(
+              child: Container(
+            color: appBgColor,
+            height: height,
+            width: width,
+            child: ListView(
+              padding: EdgeInsets.only(top: 32, left: 16, right: 16),
+              children: [
+                CircleAvatar(
+                  radius: 40,
+                  backgroundImage:
+                      NetworkImage(baseurl + auth.currentUser!.photo!),
+                ),
+                Text(auth.currentUser!.nom!,
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.manrope(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w900,
+                        textStyle: Theme.of(context).textTheme.bodyLarge)),
+                Text(auth.currentUser!.email!,
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.manrope(
+                        height: 1,
+                        fontSize: 16,
+                        textStyle: Theme.of(context).textTheme.bodySmall)),
+                SizedBox(
+                  height: 16,
+                ),
+                Container(
+                  padding: EdgeInsets.only(top: 16, bottom: 16, right: 16),
+                  // height: 300,
+                  width: width,
+                  decoration: BoxDecoration(
+                      color: textBoxColor,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Column(children: [
+                    ListTile(
+                        leading: CircleAvatar(
+                          backgroundColor: appBgColor,
+                        ),
+                        trailing: Icon(Icons.arrow_forward_ios, size: 12),
+                        subtitle: Text(
+                            "apporter des modifications à votre compte",
+                            textAlign: TextAlign.start,
+                            style: GoogleFonts.manrope(
+                                height: 1,
+                                fontSize: 10,
+                                textStyle:
+                                    Theme.of(context).textTheme.bodySmall)),
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Mon Compte",
+                                textAlign: TextAlign.start,
+                                style: GoogleFonts.manrope(
+                                    fontSize: 16,
+                                    height: 1,
+                                    fontWeight: FontWeight.w500,
+                                    textStyle:
+                                        Theme.of(context).textTheme.bodyLarge)),
+                            Icon(Icons.error_outline,
+                                color: Colors.red, size: 17)
+                          ],
+                        )),
+                    ListTile(
+                        leading: CircleAvatar(
+                          backgroundColor: appBgColor,
+                        ),
+                        trailing: Icon(Icons.arrow_forward_ios, size: 12),
+                        subtitle: Text("Gérer vos Annonces enregistré",
+                            textAlign: TextAlign.start,
+                            style: GoogleFonts.manrope(
+                                height: 1,
+                                fontSize: 10,
+                                textStyle:
+                                    Theme.of(context).textTheme.bodySmall)),
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Annonces",
+                                textAlign: TextAlign.start,
+                                style: GoogleFonts.manrope(
+                                    fontSize: 16,
+                                    height: 1,
+                                    fontWeight: FontWeight.w500,
+                                    textStyle:
+                                        Theme.of(context).textTheme.bodyLarge)),
+                            //  Icon(Icons.error_outline,
+                            // color: Colors.red, size: 17)
+                          ],
+                        )),
+                    ListTile(
+                        leading: CircleAvatar(
+                          backgroundColor: appBgColor,
+                        ),
+                        trailing: Icon(Icons.arrow_forward_ios, size: 12),
+                        subtitle: Text(
+                            "sécurisez davantage votre compte pour plus de sécurité",
+                            textAlign: TextAlign.start,
+                            style: GoogleFonts.manrope(
+                                height: 1,
+                                fontSize: 10,
+                                textStyle:
+                                    Theme.of(context).textTheme.bodySmall)),
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Double Authentification",
+                                textAlign: TextAlign.start,
+                                style: GoogleFonts.manrope(
+                                    fontSize: 16,
+                                    height: 1,
+                                    fontWeight: FontWeight.w500,
+                                    textStyle:
+                                        Theme.of(context).textTheme.bodyLarge)),
+                            // Icon(Icons.error_outline,
+                            //   color: Colors.red, size: 17)
+                          ],
+                        )),
+                    ListTile(
+                        leading: CircleAvatar(
+                          backgroundColor: appBgColor,
+                        ),
+                        trailing: Icon(Icons.arrow_forward_ios, size: 12),
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Deconexion",
+                                textAlign: TextAlign.start,
+                                style: GoogleFonts.manrope(
+                                    fontSize: 16,
+                                    height: 1,
+                                    fontWeight: FontWeight.w500,
+                                    textStyle:
+                                        Theme.of(context).textTheme.bodyLarge)),
+                            // Icon(Icons.error_outline,
+                            //color: Colors.red, size: 17)
+                          ],
+                        )),
+                  ]),
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Text("Plus",
+                    textAlign: TextAlign.start,
+                    style: GoogleFonts.manrope(
+                        fontSize: 16,
+                        height: 1,
+                        fontWeight: FontWeight.w500,
+                        textStyle: Theme.of(context).textTheme.bodyLarge)),
+                SizedBox(
+                  height: 16,
+                ),
+                Container(
+                  padding: EdgeInsets.only(top: 16, bottom: 16, right: 16),
+                  // height: 300,
+                  width: width,
+                  decoration: BoxDecoration(
+                      color: textBoxColor,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Column(children: [
+                    ListTile(
+                        leading: CircleAvatar(
+                          backgroundColor: appBgColor,
+                        ),
+                        trailing: Icon(Icons.arrow_forward_ios, size: 12),
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Aide ",
+                                textAlign: TextAlign.start,
+                                style: GoogleFonts.manrope(
+                                    fontSize: 16,
+                                    height: 1,
+                                    fontWeight: FontWeight.w500,
+                                    textStyle:
+                                        Theme.of(context).textTheme.bodyLarge)),
+                            //Icon(Icons.error_outline,
+                            //  color: Colors.red, size: 17)
+                          ],
+                        )),
+                    ListTile(
+                        leading: CircleAvatar(
+                          backgroundColor: appBgColor,
+                        ),
+                        trailing: Icon(Icons.arrow_forward_ios, size: 12),
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("A propos",
+                                textAlign: TextAlign.start,
+                                style: GoogleFonts.manrope(
+                                    fontSize: 16,
+                                    height: 1,
+                                    fontWeight: FontWeight.w500,
+                                    textStyle:
+                                        Theme.of(context).textTheme.bodyLarge)),
+                            //  Icon(Icons.error_outline,
+                            // color: Colors.red, size: 17)
+                          ],
+                        )),
+                  ]),
+                ),
+              ],
+            ),
+          ))
+        ]));
+  }
+}
+
+/**
+ * Scaffold(
         body: Stack(
       children: [
         Container(
@@ -26,7 +255,7 @@ class _ProfilState extends State<Profil> {
               Container(
                 width: MediaQuery.of(context).size.width * .9,
                 child: Text(
-                    "Vous devez etre connecté pour pouvoir acceder a cette page.",
+                    "Vous devez être connecté pour pouvoir accéder à cette page.",
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
                     maxLines: 2,
@@ -123,5 +352,4 @@ class _ProfilState extends State<Profil> {
             ))
       ],
     ));
-  }
-}
+ */

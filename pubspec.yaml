@@ -41,6 +41,21 @@ dev_dependencies:
     sdk: flutter
   google_fonts: ^6.1.0
   chatview: ^1.3.1
+  cool_stepper_reloaded: ^3.2.6
+  ripple_button: ^3.4.1
+  flutter_riverpod: ^2.4.4
+  dio: ^5.3.3
+  shimmer: ^3.0.0
+  provider: ^6.0.5
+  image_picker: ^1.0.4
+  intl_phone_field: ^3.1.0
+  dotted_border: ^2.1.0
+  ftoast: ^2.0.0
+  dropdown_search: ^5.0.6
+  flutter_chip_tags: ^2.0.2
+  chip_list: ^2.4.4+8
+
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
