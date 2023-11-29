@@ -52,12 +52,12 @@ class BottomBarItem extends StatelessWidget {
           size: 26,
           color: isActive ? activeColor : color,
         ),
-        Positioned(
+        const Positioned(
           top: 5.0,
           right: 0,
           left: 8.0,
           child: Padding(
-            padding: const EdgeInsets.only(left: 20),
+            padding: EdgeInsets.only(left: 20),
             child: Icon(
               Icons.brightness_1,
               size: 10.0,

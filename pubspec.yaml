@@ -54,6 +54,7 @@ dev_dependencies:
   dropdown_search: ^5.0.6
   flutter_chip_tags: ^2.0.2
   chip_list: ^2.4.4+8
+  intl_phone_number_input: ^0.7.3+1
 
 
 

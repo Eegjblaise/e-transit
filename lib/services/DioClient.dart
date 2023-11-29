@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 
 
-String baseurl = "http://192.168.100.33:3001/";
+String baseurl = "http://192.168.129.255:3001/";
 
 Dio dio() {
   Dio dio = new Dio();
-  dio.options.baseUrl = "http://192.168.100.33:3001/api";
+  dio.options.baseUrl = "http://192.168.129.255:3001/api";
   dio.options.headers['content-Type'] = 'application/json';
   dio.options.headers['ngrok-skip-browser-warning'] = "";
 
